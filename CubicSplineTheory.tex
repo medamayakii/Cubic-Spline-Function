@@ -1,0 +1,68 @@
+\documentclass[dvipdfmx]{ujarticle}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{ascmac}
+
+\begin{document}
+\author{Koki Kitamori}
+\title{Cubic Spline Function}
+\date{\today}
+\maketitle
+
+\begin{screen}
+We consider the polynomial regression with degree- $d$, and denote the training mean squares error by $\operatorname{MSE}(d)$. Then
+\[
+\operatorname{MSE}(d)=\min _{\widehat{\beta}_{0}, \widehat{\beta}_{1}, \ldots, \widehat{\beta}_{d}} \frac{1}{n} \sum_{i=1}^{n}\left(y_{i}-\widehat{\beta}_{0}-\widehat{\beta}_{1} x_{i}-\widehat{\beta}_{2} x_{i}^{2}-\cdots-\widehat{\beta}_{d} x_{i}^{d}\right)^{2},
+\]
+where $\left(x_{1}, y_{1}\right),\left(x_{2}, y_{2}\right), \ldots,\left(x_{n}, y_{n}\right)$ are the training data.
+Show that the training MSE monotonically decreases as $d$ increases, that is, \[
+\operatorname{MSE}(d) \geq \operatorname{MSE}(d+1)
+\]for any $d \geq 1$.
+\end{screen}
+
+まず，$d$次多項式$f_i^{(d)}$を次のようにおく．
+
+\begin{equation}
+f_{i}^{(d)}=\widehat{\beta}_{0}+\widehat{\beta}_{1} x_{i}+\cdots+\widehat{\beta}_{d} x_{i}^{d}
+\end{equation}
+
+そうすると$d+1$次多項式は次のような式となる．
+
+\begin{equation}
+  f_{i}^{(d+1)}=\widehat{\beta}_{0}+\widehat{\beta}_{1} x_{i}+\cdots+\widehat{\beta}_{d} x_{i}^{d} + \widehat{\beta}_{d+1} x_{i}^{d+1}
+\end{equation}
+
+また，MSEは次の式で表せる．
+
+\begin{equation}
+\operatorname{MSE}(d)=\min _{\widehat{\beta}_{0}, \widehat{\beta}_{1}, \ldots, \widehat{\beta}_{d}}  \frac{1}{n} \sum_{i=1}^{n}\left(y_{i}-f_{i}^{(d)}\right)^{2}
+\end{equation}
+
+また，式を簡単にするため関数$g$を次のようにおく．
+
+\begin{equation}
+  g(\widehat{\beta}_{0}, \widehat{\beta}_{1}, \ldots, \widehat{\beta}_{d}) = \frac{1}{n} \sum_{i=1}^{n}\left(y_{i}-f_{i}^{(d)}\right)^{2}
+\end{equation}
+
+与えられた式を評価するために，スライド22ページ目の最大値に関する不等式を最小値について考えると次の不等式が成り立つ．
+
+\begin{shadebox}
+Consider a real-valued function $f(x, y)$, and let $g(x)=f(x, c)$, where $c$ is a constant. Then we have
+\begin{equation}
+  \min _{x, y} f(x, y) \le \min _{x} g(x)\left(=\min _{x \in \mathbb{R}, y=\mathrm{c}} f(x, y)\right) \text {. }
+\end{equation}
+\end{shadebox}
+
+この式を利用すると，
+
+\begin{equation}
+  \begin{aligned}
+    \operatorname{MSE}(d+1) &= \min _{\widehat{\beta}_{0}, \ldots, \widehat{\beta}_{d} ,\widehat{\beta}_{d+1}} \frac{1}{n} \sum_{i=1}^{n}\left(y_{i}-f_{i}^{(d+1)}\right)^{2} \\
+    &= \min _{\widehat{\beta}_{0}, \ldots, \widehat{\beta}_{d} ,\widehat{\beta}_{d+1}} g({\widehat{\beta}_{0}, \ldots, \widehat{\beta}_{d} ,\widehat{\beta}_{d+1}}) \\
+    &\le \min _{\widehat{\beta}_{0}, \ldots, \widehat{\beta}_{d}} g(\widehat{\beta}_{0}, \widehat{\beta}_{1}, \ldots, \widehat{\beta}_{d}) \\
+    &=\operatorname{MSE}(d)
+  \end{aligned}
+\end{equation}
+以上より，与えられた不等式は示せた．
+\end{document}
